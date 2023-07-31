@@ -1,47 +1,15 @@
 package pl.javastart.task.contract;
 
 public class CardContract implements Contract {
-    protected double remainingFunds;
-    protected double pricePerSms;
-    protected double pricePerMms;
-    protected double pricePerMinuteCall;
+    double remainingFunds;
+    double pricePerSms;
+    double pricePerMms;
+    double pricePerMinuteCall;
 
     public CardContract(double remainingFunds, double pricePerSms, double pricePerMms, double pricePerMinuteCall) {
         this.remainingFunds = remainingFunds;
         this.pricePerSms = pricePerSms;
         this.pricePerMms = pricePerMms;
-        this.pricePerMinuteCall = pricePerMinuteCall;
-    }
-
-    double getRemainingFunds() {
-        return remainingFunds;
-    }
-
-    void setRemainingFunds(double remainingFunds) {
-        this.remainingFunds = remainingFunds;
-    }
-
-    double getPricePerSms() {
-        return pricePerSms;
-    }
-
-    void setPricePerSms(double pricePerSms) {
-        this.pricePerSms = pricePerSms;
-    }
-
-    double getPricePerMms() {
-        return pricePerMms;
-    }
-
-    void setPricePerMms(double pricePerMms) {
-        this.pricePerMms = pricePerMms;
-    }
-
-    double getPricePerMinuteCall() {
-        return pricePerMinuteCall;
-    }
-
-    void setPricePerMinuteCall(double pricePerMinuteCall) {
         this.pricePerMinuteCall = pricePerMinuteCall;
     }
 

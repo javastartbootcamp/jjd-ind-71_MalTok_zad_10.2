@@ -16,10 +16,6 @@ public class Phone {
         return contract;
     }
 
-    void setContract(Contract contract) {
-        this.contract = contract;
-    }
-
     void sendSms() {
         if (contract.sendSms()) {
             System.out.println("SMS wysłany\n");

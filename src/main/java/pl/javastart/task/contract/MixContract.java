@@ -13,34 +13,10 @@ public class MixContract extends CardContract {
         this.callMinutes = callMinutes;
     }
 
-    int getSmsPackage() {
-        return smsPackage;
-    }
-
-    void setSmsPackage(int smsPackage) {
-        this.smsPackage = smsPackage;
-    }
-
-    int getMmsPackage() {
-        return mmsPackage;
-    }
-
-    void setMmsPackage(int mmsPackage) {
-        this.mmsPackage = mmsPackage;
-    }
-
-    double getCallMinutes() {
-        return callMinutes;
-    }
-
-    void setCallMinutes(int callMinutes) {
-        this.callMinutes = callMinutes;
-    }
-
     @Override
     public String getBalance() {
         return String.format("Pozostało SMSów: %d\nPozostało MMSów: %d\nPozostało minut: %.2f\nNa koncie zostało %.2f zł\n",
-                smsPackage, mmsPackage, callMinutes, getRemainingFunds());
+                smsPackage, mmsPackage, callMinutes, remainingFunds);
     }
 
     @Override
