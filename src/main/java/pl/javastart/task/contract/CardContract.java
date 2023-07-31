@@ -1,12 +1,10 @@
-package pl.javastart.task.model;
-
-import pl.javastart.task.interfaces.Contract;
+package pl.javastart.task.contract;
 
 public class CardContract implements Contract {
-    private double remainingFunds;
-    private double pricePerSms;
-    private double pricePerMms;
-    private double pricePerMinuteCall;
+    protected double remainingFunds;
+    protected double pricePerSms;
+    protected double pricePerMms;
+    protected double pricePerMinuteCall;
 
     public CardContract(double remainingFunds, double pricePerSms, double pricePerMms, double pricePerMinuteCall) {
         this.remainingFunds = remainingFunds;
@@ -15,45 +13,45 @@ public class CardContract implements Contract {
         this.pricePerMinuteCall = pricePerMinuteCall;
     }
 
-    public double getRemainingFunds() {
+    double getRemainingFunds() {
         return remainingFunds;
     }
 
-    public void setRemainingFunds(double remainingFunds) {
+    void setRemainingFunds(double remainingFunds) {
         this.remainingFunds = remainingFunds;
     }
 
-    public double getPricePerSms() {
+    double getPricePerSms() {
         return pricePerSms;
     }
 
-    public void setPricePerSms(double pricePerSms) {
+    void setPricePerSms(double pricePerSms) {
         this.pricePerSms = pricePerSms;
     }
 
-    public double getPricePerMms() {
+    double getPricePerMms() {
         return pricePerMms;
     }
 
-    public void setPricePerMms(double pricePerMms) {
+    void setPricePerMms(double pricePerMms) {
         this.pricePerMms = pricePerMms;
     }
 
-    public double getPricePerMinuteCall() {
+    double getPricePerMinuteCall() {
         return pricePerMinuteCall;
     }
 
-    public void setPricePerMinuteCall(double pricePerMinuteCall) {
+    void setPricePerMinuteCall(double pricePerMinuteCall) {
         this.pricePerMinuteCall = pricePerMinuteCall;
     }
 
     @Override
-    public String balance() {
+    public String getBalance() {
         return String.format("Na koncie zostało %.2f zł\n", remainingFunds);
     }
 
     @Override
-    public boolean canSendSms() {
+    public boolean sendSms() {
         if (remainingFunds >= pricePerSms) {
             remainingFunds -= pricePerSms;
             return true;
@@ -62,7 +60,7 @@ public class CardContract implements Contract {
     }
 
     @Override
-    public boolean canSendMms() {
+    public boolean sendMms() {
         if (remainingFunds >= pricePerMms) {
             remainingFunds -= pricePerMms;
             return true;
@@ -71,7 +69,7 @@ public class CardContract implements Contract {
     }
 
     @Override
-    public int canCall(int seconds) {
+    public int call(int seconds) {
         double requiredFunds = pricePerMinuteCall * seconds / 60;
         if (remainingFunds >= requiredFunds) {
             remainingFunds -= requiredFunds;
@@ -83,7 +81,7 @@ public class CardContract implements Contract {
         }
     }
 
-    public String getPrices() {
+    String getPrices() {
         return "Cena za SMS: " + pricePerSms + " zł/sms\n"
                 + "Cena za MMS: " + pricePerMms + " zł/mms\n"
                 + "Cena za połączenie: " + pricePerMinuteCall + " zł/min\n";
@@ -91,6 +89,6 @@ public class CardContract implements Contract {
 
     @Override
     public String toString() {
-        return "Na kartę:\n" + balance() + getPrices();
+        return "Na kartę:\n" + getBalance() + getPrices();
     }
 }

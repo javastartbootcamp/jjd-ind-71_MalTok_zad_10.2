@@ -1,32 +1,34 @@
-package pl.javastart.task.model;
-
-import pl.javastart.task.interfaces.Contract;
+package pl.javastart.task.contract;
 
 public class SubscriptionContract implements Contract {
     private double monthlyCost;
 
+    public SubscriptionContract(double monthlyCost) {
+        this.monthlyCost = monthlyCost;
+    }
+
     @Override
-    public String balance() {
+    public String getBalance() {
         return String.format("Rachunek %.2f zł\n", monthlyCost);
     }
 
     @Override
-    public boolean canSendSms() {
+    public boolean sendSms() {
         return true;
     }
 
     @Override
-    public boolean canSendMms() {
+    public boolean sendMms() {
         return true;
     }
 
     @Override
-    public int canCall(int seconds) {
+    public int call(int seconds) {
         return seconds;
     }
 
     @Override
     public String toString() {
-        return "Abonament:\n" + balance();
+        return "Abonament:\n" + getBalance();
     }
 }

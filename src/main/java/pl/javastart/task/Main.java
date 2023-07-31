@@ -1,7 +1,6 @@
 package pl.javastart.task;
 
-import pl.javastart.task.app.Phone;
-import pl.javastart.task.model.MixContract;
+import pl.javastart.task.contract.MixContract;
 
 public class Main {
 

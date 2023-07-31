@@ -1,8 +1,6 @@
-package pl.javastart.task.model;
+package pl.javastart.task.contract;
 
-import pl.javastart.task.interfaces.Contract;
-
-public class MixContract extends CardContract implements Contract {
+public class MixContract extends CardContract {
     private int smsPackage;
     private int mmsPackage;
     private double callMinutes;
@@ -15,84 +13,71 @@ public class MixContract extends CardContract implements Contract {
         this.callMinutes = callMinutes;
     }
 
-    public int getSmsPackage() {
+    int getSmsPackage() {
         return smsPackage;
     }
 
-    public void setSmsPackage(int smsPackage) {
+    void setSmsPackage(int smsPackage) {
         this.smsPackage = smsPackage;
     }
 
-    public int getMmsPackage() {
+    int getMmsPackage() {
         return mmsPackage;
     }
 
-    public void setMmsPackage(int mmsPackage) {
+    void setMmsPackage(int mmsPackage) {
         this.mmsPackage = mmsPackage;
     }
 
-    public double getCallMinutes() {
+    double getCallMinutes() {
         return callMinutes;
     }
 
-    public void setCallMinutes(int callMinutes) {
+    void setCallMinutes(int callMinutes) {
         this.callMinutes = callMinutes;
     }
 
     @Override
-    public String balance() {
+    public String getBalance() {
         return String.format("Pozostało SMSów: %d\nPozostało MMSów: %d\nPozostało minut: %.2f\nNa koncie zostało %.2f zł\n",
                 smsPackage, mmsPackage, callMinutes, getRemainingFunds());
     }
 
     @Override
-    public boolean canSendSms() {
+    public boolean sendSms() {
         if (smsPackage > 0) {
             smsPackage--;
             return true;
-        } else if (getRemainingFunds() >= getPricePerSms()) {
-            setRemainingFunds(getRemainingFunds() - getPricePerSms());
-            return true;
         }
-        return false;
+        return super.sendSms();
     }
 
     @Override
-    public boolean canSendMms() {
+    public boolean sendMms() {
         if (mmsPackage > 0) {
             mmsPackage--;
             return true;
-        } else if (getRemainingFunds() >= getPricePerMms()) {
-            setRemainingFunds(getRemainingFunds() - getPricePerMms());
-            return true;
         }
-        return false;
+        return super.sendMms();
     }
 
     @Override
-    public int canCall(int seconds) {
+    public int call(int seconds) {
         double availableSeconds = callMinutes * 60;
         if (availableSeconds >= seconds) {
             callMinutes = (availableSeconds - seconds) / 60;
             return seconds;
         } else {
             int remainingSeconds = (int) (seconds - availableSeconds);
-            double requiredFunds = getPricePerMinuteCall() * remainingSeconds / 60;
+            int secondsCall = super.call(remainingSeconds);
             callMinutes = 0;
-            if (getRemainingFunds() >= requiredFunds) {
-                setRemainingFunds(getRemainingFunds() - requiredFunds);
-                return seconds;
-            } else {
-                double secondsCall = getRemainingFunds() * 60 / getPricePerMinuteCall();
-                setRemainingFunds(0);
-                return (int) (availableSeconds + secondsCall);
-            }
+            return (int) availableSeconds + secondsCall;
         }
     }
 
     @Override
     public String toString() {
-        return "Mix:\n" + balance()
+        return "Mix:\n" + getBalance()
                 + getPrices();
     }
 }

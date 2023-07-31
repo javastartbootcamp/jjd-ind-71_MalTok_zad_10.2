@@ -1,6 +1,6 @@
-package pl.javastart.task.app;
+package pl.javastart.task;
 
-import pl.javastart.task.interfaces.Contract;
+import pl.javastart.task.contract.Contract;
 
 public class Phone {
     private Contract contract;
@@ -8,11 +8,11 @@ public class Phone {
     private int mmsSent = 0;
     private int secondsUsed = 0;
 
-    public Phone(Contract contract) {
+    Phone(Contract contract) {
         this.contract = contract;
     }
 
-    public Contract getContract() {
+    Contract getContract() {
         return contract;
     }
 
@@ -20,8 +20,8 @@ public class Phone {
         this.contract = contract;
     }
 
-    public void sendSms() {
-        if (contract.canSendSms()) {
+    void sendSms() {
+        if (contract.sendSms()) {
             System.out.println("SMS wysłany\n");
             smsSent++;
         } else {
@@ -29,8 +29,8 @@ public class Phone {
         }
     }
 
-    public void sendMms() {
-        if (contract.canSendMms()) {
+    void sendMms() {
+        if (contract.sendMms()) {
             System.out.println("MMS wysłany\n");
             mmsSent++;
         } else {
@@ -38,9 +38,11 @@ public class Phone {
         }
     }
 
-    public void call(int seconds) {
-        int secondsCall = contract.canCall(seconds);
-        if (secondsCall < seconds) {
+    void call(int seconds) {
+        int secondsCall = contract.call(seconds);
+        if (secondsCall == 0) {
+            System.out.println("Brak środków, połączenie niemożliwe");
+        } else if (secondsCall < seconds) {
             System.out.println("Brak wystarczających środków, połączenie przerwane po " + secondsCall + " sek\n");
         } else {
             System.out.println("Rozmowa trwała " + seconds + " sek\n");
@@ -48,11 +50,11 @@ public class Phone {
         secondsUsed += secondsCall;
     }
 
-    public void printAccountState() {
+    void printAccountState() {
         System.out.println("=== STAN KONTA ===");
         System.out.println("Wysłanych SMSów: " + smsSent);
         System.out.println("Wysłanych MMSów: " + mmsSent);
         System.out.println("Liczba sekund rozmowy: " + secondsUsed);
-        System.out.println(contract.balance());
+        System.out.println(contract.getBalance());
     }
 }
